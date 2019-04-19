@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+
+   <!-- 配置静态资源解析 -->
+
+     <mvc:resources location="/js/" mapping="/js/**"></mvc:resources>
+
+
+	<!-- 视图解析器 -->
+	<!-- 解析jsp -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!--设置路径前缀 <proerty name="prefix" value=""></proerty> 设置后缀 <proerty name="suffix" 
+			value="jsp></proerty> -->
+
+	</bean>
+	<!-- 注解handler也需要在xml文件中进行配置 可以使用组件扫描来进行简化操作 -->
+	<!-- <bean class="com.springmvc.handler.Handler2"></bean> -->
+	<context:component-scan base-package="com.nsu.CloudCompute.controller"></context:component-scan>
+	
+
+
+	<!-- ========================================注解配置===================================== -->
+
+
+	<!-- 注解驱动可以代替上面的 注解映射器和适配器 并且还会默认加载很多的参数  conversion-service="conversionService" validator="validator"-->
+	<mvc:annotation-driven></mvc:annotation-driven>
+	
+	
+	
+	
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+

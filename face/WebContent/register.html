@@ -1,0 +1,189 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>register</title>
+<!-- Custom Theme files -->
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
+<!-- Custom Theme files -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta name="keywords" content="Login form web template, Sign up Web Templates, Flat Web Templates, Login signup Responsive web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<!--Google Fonts-->
+<link href='http://fonts.useso.com/css?family=Roboto:500,900italic,900,400italic,100,700italic,300,700,500italic,100italic,300italic,400' rel='stylesheet' type='text/css'>
+<link href='http://fonts.useso.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+<!--引入外部文件-->
+<link href="css/registerStyle.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript" src="jquery/jquery-3.3.1.js"></script>
+<style>
+  body{
+	   padding:10px 0px 10px 0px;
+	}
+#selectLab,#selectMajor{
+	   border:1px solid black;
+	   background:#CACACA;
+	   outline: none;
+       font-size: 15px;
+       font-weight: 500;
+       color: #818181;
+       padding: 15px 20px;
+       background: #CACACA;
+       border: 1px solid #ccc;
+       border-radius:25px;
+       -webkit-border-radius: 25px;
+      -moz-border-radius: 25px;
+      -o-border-radius: 25px;
+       margin: 0px 0px 12px 0px;
+       width: 98%;
+       -webkit-appearance: none;
+	}
+	
+	#selectMajor option{
+	     width:88%;
+	     border:none;
+}
+</style>
+
+</head>
+<body>
+<div class="login">
+	<div class="login-top">
+		<h1>注册</h1>
+		
+			<input  id="phoneNum"name="phoneNum" type="text" value="手机号码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '手机号码';}">
+			<input  id="code" name="code" id="code" type="text" placeholder="验证码" onfocus="this.placeholder=''" onblur="this.placeholder='验证码'"/>
+			<span ><input type="button" onclick="code()" id="send_code" value="发送验证码"/></span>
+			<select id="selectLab">
+			    <option value ="0" >实验室</option>
+                <option value ="1">云计算实验室</option>
+                <option value ="2">人工智能实验室</option>
+                <option value="3">ISO实验室</option>
+                <option value="4">虚拟现实实验室</option>
+            </select>
+			<input id="studentName" name="studentName" type="text"  value="姓名"  onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '姓名';}">
+		
+			<select id="selectMajor">
+			    <option value ="0" >专业</option>
+                <option value ="1">计算机科学与技术</option>
+                <option value ="2">软件工程</option>
+                <option value="3">商务英语</option>
+                <option value="4">物联网工程</option>
+            </select>
+   
+			<input id="studentId" name="studentId" type="text"  value="学号"  onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '学号';}">
+		    <input id="password1" name="password1" class="form-text" type="password" placeholder="密码" onfocus="this.placeholder=''" onblur="this.placeholder='密码'"/> 
+			<input id="password2" name="password2" type="password" placeholder="确认密码" onfocus="this.placeholder=''" onblur="this.placeholder='确认密码'"/>
+	    
+	    <div class="forgot">
+	        <a id="error" href="#"></a>
+	    	<input type="submit" onclick="fun2()" value="注册" />
+	    </div>
+	</div>
+	<div class="login-bottom">
+		<h3><a href="account-login.html">账号登录</a>&nbsp;<a href="face-login.html">人脸登录</a></h3>
+	</div>
+</div>
+<div class="copyright">
+	<p>Copyright &copy; 2019.云计算实验室.</p>
+</div>
+</body>
+<script type="text/javascript" src="js/registerJs.js"></script>
+<script type="text/javascript" src="jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+
+function fun2(){
+	if($("#selectMajor option:selected").val()=="0"){
+		alert("请选择专业");
+	}
+	else if($("#selectLab option:selected").val()=="0"){
+		alert("请选择实验室");
+	}
+	if($("#selectMajor option:selected").val()!="0"&&$("#selectLab option:selected").val()!="0"){
+		var phoneNum=$('#phoneNum').val();
+		var code=$('#code').val();
+		var studentName=$('#studentName').val();
+		var labId=$("#selectLab option:selected").val();
+		var major=$("#selectMajor option:selected").val();
+		var studentId=$('#studentId').val();
+		var password1=$('#password1').val();
+		var password2=$('#password2').val();
+		$.ajax({
+			 url: "http://localhost:8080/face/register.action",
+			 type: "get",
+			 data:'phoneNum='+phoneNum+
+			    '&code='+code+
+			    '&studentName='+studentName+
+			    '&labId='+labId+
+			    '&major='+major+
+			    '&studentId='+studentId+
+			    '&password='+password1+
+			    '&password2='+password2,
+			 success:function(data){
+				if(data=="phoneNum is incorrect"){
+					$('#error').text("手机号有误");
+				}
+				else if(data=="code is incorrect"){
+					$('#error').text("验证码错误");
+				}
+				else if(data=="studentId is incorrect"){
+					$('#error').text("学号有误");
+				}
+				else if(data=="two passwords input inconsistent"){
+					$('#error').text("两次密码不一致");
+				}
+				else if(data=="phoneNum register"){
+					$('#error').text("该手机号码已经注册");
+				}
+				else if(data=="success"){
+					window.location.href = 'index.html';
+				}
+				
+			 }
+		});
+
+	}
+	
+}
+
+
+
+function select2(){
+	alert();
+	
+}
+
+
+
+/*function fun(){
+	alert("12");
+	var phoneNum=$('#phoneNum').val();
+	var code=$('#code').val();
+	var department=$('#department').val();
+	var major=$('#major').val();
+	var studentId=$('#studentId').val();
+	var password1=$('#password1').val();
+	var password2=$('#password2').val();
+	alert(password1);
+	$.ajax({
+	    url: "http://localhost:8080/face/register.action",
+	    type: "post",
+	    data:'phoneNum=1213',
+	    'phoneNum='+phoneNum+
+	    '&code='+code+
+	    '&department='+department+
+	    '&major='+major+
+	    '&studentId='+studentId+
+	    '&password='+password1+
+	    '&password2'+password2,
+	    success : function(data){
+	    	alert(data);
+	    }
+	});
+	alert("11");
+}*/
+
+
+
+
+</script>
+</html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nsu.CloudCompute.dao.CloudComputeMapper" >
+      <!-- 抽取sql语句 
+       <sql id="sql_where">
+            u.uid=o.uid and oid=${value}
+       </sql>-->
+       
+	<select id="queryByPhoneNum" parameterType="java.lang.String"
+		resultType="com.nsu.CloudCompute.pojo.Student">
+		select * from student where phoneNum=#{phoneNum}
+	</select>
+
+	<insert id="insertStudent" parameterType="com.nsu.CloudCompute.pojo.Student">
+		insert into 
+		student(studentId,studentName,phoneNum,password,labId,major) 
+		values(#{studentId},#{studentName},#{phoneNum},#{password},#{labId},#{major})
+	</insert>
+
+      
+</mapper>

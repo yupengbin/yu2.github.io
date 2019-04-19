@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>account login</title>
+<!-- Custom Theme files -->
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="css/accountStyle.css" rel="stylesheet" type="text/css"/>
+
+<!-- Custom Theme files -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta name="keywords" content="Login form web template, Sign up Web Templates, Flat Web Templates, Login signup Responsive web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<!--Google Fonts-->
+<link href='http://fonts.useso.com/css?family=Roboto:500,900italic,900,400italic,100,700italic,300,700,500italic,100italic,300italic,400' rel='stylesheet' type='text/css'>
+<link href='http://fonts.useso.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+<!--Google Fonts-->
+</head>
+<body>
+<div class="login">
+	<div class="login-top">
+		<h1>账号登录</h1>
+		
+			<input id="phoneNum" name="phoneNum" type="text" value="手机号" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '手机号';}">
+			<!--<input type="passwo!rd" placeholder="密码" onfocus="this.placeholder=''" onblur="this.placeholder='密码'"/>-->
+            <!-- <img id="demo_img" onclick="hideShowPsw()" src="images/visible.png"/> -->
+			<input id="password" name="password" id="absoluteInput" type="password" placeholder="密码" onfocus="this.placeholder=''" onblur="this.placeholder=''{this.value = 'password';}"/>
+	          <div class="forgot">
+	    	      <a id="error" href="#"></a>
+	    	      <input type="submit" value="登录" onclick="fun()"/>
+	          </div>
+	  
+	</div>
+	<div class="login-bottom">
+		<h3><a href="register.html">注册</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="face-login.html">人脸登录</a></h3>
+	</div>
+</div>	
+<div class="copyright">
+	<p>Copyright &copy; 2019.云计算实验室.</p>
+</div>
+</body>
+<script type="text/javascript" src="js/accountJs.js"></script>
+<script type="text/javascript" src="jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+
+function fun(){
+	var phoneNum=$('#phoneNum').val();
+	var password=$('#password').val();
+	$.ajax({
+	    url: "http://localhost:8080/face/login.action",
+	    type: "post",
+	    data:'phoneNum='+phoneNum+'&password='+password,
+	    success : function(data){
+	       if(data=="success"){
+	    	   window.location.href = 'index.html';
+	       }
+	       else if(data=="num is null"){
+	    	   $('#error').text("手机号不能为空");
+	       }
+	       else if(data=="num is incorrect"){
+	    	   $('#error').text("手机号不正确");
+	       }
+	       else if(data=="num not register"){
+	    	   $('#error').text("手机号没有被注册");
+	       }
+           else if(data=="incorrect"){
+        	   $('#error').text("手机号或密码不正确");
+	       }
+	    }
+	});
+}
+    
+</script>
+</html>

@@ -1,0 +1,12 @@
+  #demo_img{
+        width:25px;
+		position:relative;
+		right:-85%;
+		top:35px;;
+		
+	 }
+
+	 #absoluteInpu{
+       position:absolute;
+
+	 }

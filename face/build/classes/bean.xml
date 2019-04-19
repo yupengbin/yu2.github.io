@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns="http://www.springframework.org/schema/beans" 
+xmlns:context="http://www.springframework.org/schema/context" 
+xmlns:aop="http://www.springframework.org/schema/aop" 
+xmlns:tx="http://www.springframework.org/schema/tx" 
+xsi:schemaLocation="http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans-4.2.xsd 
+http://www.springframework.org/schema/context 
+http://www.springframework.org/schema/context/spring-context-4.2.xsd
+ http://www.springframework.org/schema/aop 
+ http://www.springframework.org/schema/aop/spring-aop-4.2.xsd 
+ http://www.springframework.org/schema/tx 
+ http://www.springframework.org/schema/tx/spring-tx-4.2.xsd ">
+
+	<!-- 引入外部文件 -->
+	<context:property-placeholder location="classpath:db.properties" />
+	
+	<!-- 数据源 -->
+	
+	<!-- 连接池管理 -->
+	<bean name="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="jdbcUrl" value="${jdbc.url}"></property>
+		<property name="driverClass" value="${jdbc.driverClass}"></property>
+		<property name="user" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+	
+	
+	<!-- sqlSessionFactory配置  通过整合包中得到 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	       <!-- 加载mybatis配置文件 -->
+	       <property name="configLocation" value="classpath:/SqlMapConfig.xml"></property>
+	       <!-- 数据源 -->
+	       <property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- 注解时扫描的包 -->
+	<context:component-scan base-package="com.nsu.CloudCompute.service" />
+	<context:component-scan base-package="com.nsu.CloudCompute.controller" />
+	
+	
+	
+	
+	<!--  原始  配置dao实现类来尽心配置SqlsessionFactory -->
+	<bean id="dao" class="com.nsu.CloudCompute.dao.CloudComputeDao">
+	     <property name="sqlSessionFactory"  ref="sqlSessionFactory"></property>
+	</bean>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 使用mapper代理对象方式进行得到代理对象     生成代理对象
+	<bean id="ordersMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	       指定mapper	接口 
+	      <property name="mapperInterface"  value="com.ssm.dao.OrdersDao"></property>
+	      
+	     <property name="sqlSessionFactory"  ref="sqlSessionFactory"></property>
+	</bean>-->
+	
+	
+	<!-- 由于之后会有多个mapper配置文件的话就会非常繁琐，所以就使用自动扫描的方式来进行自动生成对象
+	    
+	
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+               指定扫描的包名 
+          <property name="basePackage" value="com.ssm.mapper"></property>
+          <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+    
+    <bean id="selectOrders" class="org.mybatis.spring.mapper.MapperFactoryBean">
+          <property name="mapperInterface" value="com.ssm.mapper.OrdersMapper"></property>
+          <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean> -->
+
+
+
+
+
+
+</beans>

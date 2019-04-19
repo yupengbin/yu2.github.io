@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src='./jquery/jquery-3.3.1.js'></script>
+<script type="text/javascript">
+function requ(){
+	$.ajax({
+	    url: "http://localhost:8080/face/login.action",
+	    type: "post",
+	    //data: {jsonStr:'nihao'},
+	    //data: {jsonStr:obj},
+	    //data: obj,
+	    //contentType: 'application/json;charset=utf-8',
+	    success : function(data){
+	       alert(data);
+	    }
+	});
+}
+
+
+
+function requ2(){
+	$.ajax({
+	    url: "http://localhost:8080/face/login.action",
+	    type: "post",
+	    data:'name=余彭斌&time=2019',
+	    success : function(data){
+	       if(data=="success"){
+	    	   window.location.href = 'success.html';
+	       }
+	    }
+	});
+}
+    
+</script>
+</head>
+<body>
+<input type="button" onclick="requ()" value="点击"/>
+<input type="button" onclick="requ2()" value="点击2"/>
+<div id="show"></div>
+</body>
+</html>
